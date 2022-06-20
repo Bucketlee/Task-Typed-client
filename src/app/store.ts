@@ -6,6 +6,10 @@ export const store = configureStore({
   reducer: {
     resource: resourceSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type AppDispatch = typeof store.dispatch;
