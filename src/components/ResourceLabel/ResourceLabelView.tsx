@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface ResourceLabelViewProps {
   value: string;
@@ -18,11 +19,11 @@ function ResourceLabelView({
   onDeleteButtonClick,
 }: ResourceLabelViewProps) {
   return (
-    <div>
+    <ResourceLabelViewWrapper>
       <div>
         {!isEditing ?
-          <div>{value}</div> :
-          <input
+          <TitleWrapper>{value}</TitleWrapper> :
+          <EditInputWrapper
             type='text'
             defaultValue={value}
             onChange={(e) => onInputValueChange(e.target.value)}
@@ -30,12 +31,55 @@ function ResourceLabelView({
           />
         }
       </div>
-      <div>
-        <button onClick={() => onEditButtonClick()}>Edit</button>
-        <button onClick={() => onDeleteButtonClick()}>Delete</button>
-      </div>
-    </div>
+      <OptionWrapper>
+        <OptionButtonWrapper onClick={() => onEditButtonClick()}>
+          <ImageWrapper src={process.env.PUBLIC_URL + '/images/edit.png'} alt='resource-label-edit' />
+        </OptionButtonWrapper>
+        <OptionButtonWrapper onClick={() => onDeleteButtonClick()}>
+          <ImageWrapper src={process.env.PUBLIC_URL + '/images/delete.png'} alt='resource-label-delete' />
+        </OptionButtonWrapper>
+      </OptionWrapper>
+    </ResourceLabelViewWrapper>
   );
 }
+
+const ResourceLabelViewWrapper = styled.div`
+  padding: 12px;
+  width: 260px;
+  height: 66px;
+  display: grid;
+  grid-template-rows: auto 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  font-size: 14px;
+`
+
+const TitleWrapper = styled.div`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+`
+const EditInputWrapper = styled.input`
+  width: 100%;
+  height: 30px;
+`
+
+const OptionWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
+
+const OptionButtonWrapper = styled.button`
+  background: inherit;
+  border: none;
+`
+
+const ImageWrapper = styled.img`
+  width: 20px;
+  height: 20px;
+`
 
 export default ResourceLabelView;
