@@ -1,8 +1,8 @@
 import React, { useMemo, useRef, useState, useCallback } from 'react';
 
-import { store } from '../app/store';
-import MenuButton from './MenuButton';
-import ResourceService from '../services/resourceService';
+import { store } from '../../app/store';
+import ResourceService from '../../services/resourceService';
+import MenuView from './MenuView';
 
 function Menu() {
   const [isUrlInputOpen, setIsUrlInputOpen] = useState(false);
@@ -39,24 +39,16 @@ function Menu() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <div>
-          <MenuButton
-            title={'URL 추가'}
-            onClick={() => setIsUrlInputOpen(true)}
-          />
-          {isUrlInputOpen ? <input type='url' name='urlInput' onKeyDown={(e) => handleUrlInputKeyDown(e)} onChange={(e) => setNewUrl(e.target.value)} /> : <></>}
-        </div>
-        <div>
-          <MenuButton
-            title={'이미지 추가'}
-            onClick={handleAddImageButtonClick}
-          />
-          <input ref={hiddenFileInput} type='file' name='filesInput' accept='image/*' onChange={(e) => handleChangeFile(e)} multiple style={{display:'none'}}/>
-        </div>
-      </div>
-    </div>
+    <MenuView
+      onAddUrlButtonClick={() => setIsUrlInputOpen(true)}
+      isUrlInputOpen={isUrlInputOpen}
+      onUrlInputKeyDown={handleUrlInputKeyDown}
+      onUrlInputChange={setNewUrl}
+      onUrlInputBlur={() => setIsUrlInputOpen(false)}
+      onAddImageButtonClick={handleAddImageButtonClick}
+      hiddenFileInput={hiddenFileInput}
+      onImageInputChange={handleChangeFile}
+    />
   );
 }
 
