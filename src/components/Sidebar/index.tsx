@@ -6,7 +6,11 @@ import { IResource } from '../../models/resource';
 import ResourceService from '../../services/resourceService';
 import SidebarView from './SidebarView';
 
-function Sidebar() {
+interface SidebarProps {
+  onResourceClick(resource: IResource): void;
+}
+
+function Sidebar({ onResourceClick }: SidebarProps) {
   const resources = useResourceObserver();
   const resourceService = useMemo(() => new ResourceService(store), []);
 
@@ -23,6 +27,7 @@ function Sidebar() {
       resources={resources}
       onEditButtonClick={handleTitleEdit}
       onDeleteButtonClick={handleResourceDelete}
+      onResourceClick={onResourceClick}
     />
   );
 }

@@ -8,19 +8,21 @@ interface SidebarViewProps {
   resources: IResource[];
   onEditButtonClick(resource: IResource, newTitle: string): void;
   onDeleteButtonClick(resource: IResource): void;
+  onResourceClick(resource: IResource): void;
 }
 
 function SidebarView({
   resources,
   onEditButtonClick,
-  onDeleteButtonClick
+  onDeleteButtonClick,
+  onResourceClick,
 }: SidebarViewProps) {
   return (
     <SidebarViewWrapper>
       <Menu />
       <ResourcesWrapper>
         {resources.map((data, i) => (
-          <ResourceLabelWrapper>
+          <ResourceLabelWrapper onClick={() => onResourceClick(data)}>
             <ResourceLabel
               key={`resource-${i}`}
               title={data.title}
@@ -47,10 +49,13 @@ const ResourcesWrapper = styled.div`
   overflow: auto;
 `
 
-const ResourceLabelWrapper = styled.div`
-  margin: 10px 0;
+const ResourceLabelWrapper = styled.button`
+  margin: 10px;
+  padding: 0;
   display: flex;
   justify-content : center;
+  border: none;
+  background-color: inherit;
 `
 
 export default SidebarView;
