@@ -28,7 +28,7 @@ export default class Resource implements IResource {
   static fromTitle(type: ResourceType, title: string, source?: string): IResource {
     const now = Date.now();
     return new Resource(
-      `${now}-${type}-${title}`,
+      `${type}-${now}`,
       type,
       title,
       source ? source : title,

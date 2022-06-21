@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IResource } from '../models/resource';
+import { data } from './initialResource';
 
 interface IResourceState {
   resources: IResource[];
 }
 
 const initialState: IResourceState = {
-  resources: [],
+  resources: [ ...data ],
 }
 
 export const resourceSlice = createSlice({
