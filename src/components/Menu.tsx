@@ -1,8 +1,8 @@
 import React, { useMemo, useRef, useState, useCallback } from 'react';
 
-import { store } from './app/store';
-import AddButton from './AddButton';
-import ResourceService from './services/resourceService';
+import { store } from '../app/store';
+import MenuButton from './MenuButton';
+import ResourceService from '../services/resourceService';
 
 function Menu() {
   const [isUrlInputOpen, setIsUrlInputOpen] = useState(false);
@@ -42,14 +42,14 @@ function Menu() {
     <div>
       <div>
         <div>
-          <AddButton
+          <MenuButton
             title={'URL 추가'}
             onClick={() => setIsUrlInputOpen(true)}
           />
           {isUrlInputOpen ? <input type='url' name='urlInput' onKeyDown={(e) => handleUrlInputKeyDown(e)} onChange={(e) => setNewUrl(e.target.value)} /> : <></>}
         </div>
         <div>
-          <AddButton
+          <MenuButton
             title={'이미지 추가'}
             onClick={handleAddImageButtonClick}
           />
