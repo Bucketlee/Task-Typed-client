@@ -26,6 +26,7 @@ class ResourceService implements IResourceService {
 
     if (source.includes('youtube.com/watch?v=')) {
       source = changeYoutubeEmbedUrl(source);
+      title = source;
     }
 
     const newResource = Resource.fromTitle(type, title, source);
@@ -39,15 +40,17 @@ class ResourceService implements IResourceService {
       const reader = new FileReader();
       reader.readAsDataURL(files[i]);
       reader.onloadend = () => {
-        const base64 = reader.result;
-        if (base64) {
-        const base64Sub = base64.toString();
+        setTimeout(() => {
+          const base64 = reader.result;
+          if (base64) {
+          const base64Sub = base64.toString();
 
-        const newResource = Resource.fromTitle('image', files[i].name, base64Sub);
-        this.store.dispatch(addResource(newResource));
-        } else {
-          return false;
-        }
+          const newResource = Resource.fromTitle('image', files[i].name, base64Sub);
+          this.store.dispatch(addResource(newResource));
+          } else {
+            return false;
+          }
+        }, (Math.random() * 7 + 3)*1000*i);
       }
     }
     return true;
