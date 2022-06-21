@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { resourceSlice } from './resourceSlice';
+import { toastSlice } from './toastSlice';
 
 
 export const store = configureStore({
   reducer: {
     resource: resourceSlice.reducer,
+    toast: toastSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
