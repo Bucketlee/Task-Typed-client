@@ -45,7 +45,7 @@ function ResourceLabelView({
 
 const ResourceLabelViewWrapper = styled.div`
   padding: 12px;
-  width: 260px;
+  width: 236px;
   height: 66px;
   display: grid;
   grid-template-rows: auto 20px;
