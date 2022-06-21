@@ -6,7 +6,7 @@ import { changeYoutubeEmbedUrl, checkValidUrl } from "../utils/resource";
 
 export interface IResourceService {
   addUrlResource(type: ResourceType, title: string, source: string): boolean;
-  addImageResource(files: FileList): boolean;
+  addImageResource(file: File): boolean;
   updateResourceTitle(resource: IResource, newTitle: string): void;
   deleteResource(id: string): void;
 }
@@ -34,23 +34,18 @@ class ResourceService implements IResourceService {
     return true;
   }
 
-  addImageResource(files: FileList): boolean {
-    const len = files ? files.length : 0;
-    for (let i = 0; i < len; i += 1) {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[i]);
-      reader.onloadend = () => {
-        setTimeout(() => {
-          const base64 = reader.result;
-          if (base64) {
-          const base64Sub = base64.toString();
+  addImageResource(file: File): boolean {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      if (base64) {
+      const base64Sub = base64.toString();
 
-          const newResource = Resource.fromTitle('image', files[i].name, base64Sub);
-          this.store.dispatch(addResource(newResource));
-          } else {
-            return false;
-          }
-        }, (Math.random() * 7 + 3)*1000*i);
+      const newResource = Resource.fromTitle('image', file.name, base64Sub);
+      this.store.dispatch(addResource(newResource));
+      } else {
+        return false;
       }
     }
     return true;

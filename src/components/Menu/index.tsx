@@ -2,6 +2,7 @@ import React, { useMemo, useRef, useState, useCallback } from 'react';
 
 import { store } from '../../app/store';
 import ResourceService from '../../services/resourceService';
+import ToastService from '../../services/toastService';
 import MenuView from './MenuView';
 
 function Menu() {
@@ -9,10 +10,16 @@ function Menu() {
   const [newUrl, setNewUrl] = useState('');
 
   const resourceService = useMemo(() => new ResourceService(store), []);
+  const toastService = useMemo(() => new ToastService(store), []);
 
   const handleUrlInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      resourceService.addUrlResource('url', newUrl);
+      const result = resourceService.addUrlResource('url', newUrl);
+      if (result) {
+        toastService.addNewToast('리소스를 등록했습니다.', 3000);
+      } else {
+        toastService.addNewToast('리소스를 등록하지 못했습니다.', 3000);
+      }
       setNewUrl('');
       setIsUrlInputOpen(false);
     }
@@ -20,14 +27,26 @@ function Menu() {
     if (e.key === 'Escape') {
       setIsUrlInputOpen(false);
     }
-  }, [resourceService, newUrl]);
+  }, [resourceService, toastService, newUrl]);
 
   const handleChangeFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+
     if (files) {
-      resourceService.addImageResource(files);
+      const len = files ? files.length : 0;
+      for (let i = 0; i < len; i += 1) {
+        setTimeout(() => {
+          const result = resourceService.addImageResource(files[i]);
+          if (result) {
+            toastService.addNewToast('리소스를 등록했습니다.', 3000);
+          } else {
+            toastService.addNewToast('리소스를 등록하지 못했습니다.', 3000);
+          }
+        }, (Math.random() * 7 + 3)*1000*i);
+      }
     }
-  }, [resourceService]);
+
+  }, [resourceService, toastService]);
 
   const hiddenFileInput = useRef(null);
 
