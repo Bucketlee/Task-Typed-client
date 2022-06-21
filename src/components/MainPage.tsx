@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { IResource } from '../models/resource';
 import Sidebar from './Sidebar';
 import ContentViewer from './ContentViewer';
+import Toast from './Toast';
 
 function MainPage() {
   const [currentResource, setCurrentResource] = useState<IResource | undefined>(undefined);
@@ -19,7 +20,7 @@ function MainPage() {
           iframeSource={currentResource.source ? currentResource.source : ''}
         />
       ) : <></>}
-
+      <Toast></Toast>
     </MainPageWrapper>
   );
 }
