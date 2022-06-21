@@ -2,31 +2,64 @@ import { Store } from "@reduxjs/toolkit";
 
 import Resource, { IResource, ResourceType } from '../models/resource';
 import { addResource, updateResource, deleteResource } from "../app/resourceSlice";
+import { changeYoutubeEmbedUrl, checkValidUrl } from "../utils/resource";
 
 export interface IResourceService {
-  addResource(type: ResourceType, title: string, source: string): void;
-  updateResourceTitle(resource: IResource, newTitle: string): boolean;
-  deleteResource(id: string): boolean;
+  addUrlResource(type: ResourceType, title: string, source: string): boolean;
+  addImageResource(files: FileList): boolean;
+  updateResourceTitle(resource: IResource, newTitle: string): void;
+  deleteResource(id: string): void;
 }
 
 class ResourceService implements IResourceService {
   constructor(private readonly store: Store) {
   }
 
-  addResource(type: ResourceType, title: string, source?: string): void {
+  addUrlResource(type: ResourceType, title: string, source?: string): boolean {
+    if (!source) {
+      source = title;
+    }
+
+    if (!checkValidUrl(source)) {
+      return false;
+    }
+
+    if (source.includes('youtube.com/watch?v=')) {
+      source = changeYoutubeEmbedUrl(source);
+    }
+
     const newResource = Resource.fromTitle(type, title, source);
     this.store.dispatch(addResource(newResource));
+    return true;
   }
 
-  updateResourceTitle(resource: IResource, newTitle: string): boolean {
+  addImageResource(files: FileList): boolean {
+    const len = files ? files.length : 0;
+    for (let i = 0; i < len; i += 1) {
+      const reader = new FileReader();
+      reader.readAsDataURL(files[i]);
+      reader.onloadend = () => {
+        const base64 = reader.result;
+        if (base64) {
+        const base64Sub = base64.toString();
+
+        const newResource = Resource.fromTitle('image', files[i].name, base64Sub);
+        this.store.dispatch(addResource(newResource));
+        } else {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  updateResourceTitle(resource: IResource, newTitle: string): void {
     const newResource = resource.copyWith({ title: newTitle });
     this.store.dispatch(updateResource(newResource));
-    return true;
   }
 
-  deleteResource(id: string): boolean {
+  deleteResource(id: string): void {
     this.store.dispatch(deleteResource({ id }));
-    return true;
   }
 }
 
