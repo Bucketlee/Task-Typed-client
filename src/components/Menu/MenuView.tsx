@@ -26,52 +26,57 @@ function MenuView({
 }: MenuViewProps) {
   return (
     <MenuViewWrapper>
-      <div>
-        <MenuButton
-          title={'URL 추가'}
-          onClick={onAddUrlButtonClick}
-        />
-        {isUrlInputOpen ? (
-          <AddUrlWrapper>
-            <AddUrlInputWrapper
-              type='url'
-              name='urlInput'
-              onKeyDown={onUrlInputKeyDown}
-              onChange={(e) => onUrlInputChange(e.target.value)}
-              onBlur={onUrlInputBlur}
-            />
-          </AddUrlWrapper>
-          ) :
-          <></>
-        }
-      </div>
-      <div>
-        <MenuButton
-          title={'이미지 추가'}
-          onClick={onAddImageButtonClick}
-        />
-        <AddImageInputWrapper
-          ref={hiddenFileInput}
-          type='file'
-          name='filesInput'
-          accept='image/*'
-          onChange={(e) => onImageInputChange(e)}
-          multiple
-        />
-      </div>
+      <MenuContentsWrapper>
+        <div>
+          <MenuButton
+            title={'URL 추가'}
+            onClick={onAddUrlButtonClick}
+          />
+          {isUrlInputOpen ? (
+            <AddUrlWrapper>
+              <AddUrlInputWrapper
+                type='url'
+                name='urlInput'
+                onKeyDown={onUrlInputKeyDown}
+                onChange={(e) => onUrlInputChange(e.target.value)}
+                onBlur={onUrlInputBlur}
+              />
+            </AddUrlWrapper>
+            ) :
+            <></>
+          }
+        </div>
+        <div>
+          <MenuButton
+            title={'이미지 추가'}
+            onClick={onAddImageButtonClick}
+          />
+          <AddImageInputWrapper
+            ref={hiddenFileInput}
+            type='file'
+            name='filesInput'
+            accept='image/*'
+            onChange={(e) => onImageInputChange(e)}
+            multiple
+          />
+        </div>
+      </MenuContentsWrapper>
     </MenuViewWrapper>
   );
 }
 
 const MenuViewWrapper = styled.div`
-  margin-bottom: 3px;
+  position: fixed;
+`
+
+const MenuContentsWrapper = styled.div`
   width: 280px;
   height: 50px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   background-color: #ffffff;
-  box-shadow: 0 5px 5px -5px gray;
+  box-shadow: 0 5px 5px -3px gray;
 `
 
 const AddUrlWrapper = styled.div`
