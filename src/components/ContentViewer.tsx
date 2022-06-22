@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { TypedIcon } from 'typed-design-system';
+
 interface ContentViewerProps {
   title: string;
   iframeSource: string;
@@ -16,9 +18,9 @@ function ContentViewer({
       <TitleWrapper>
         <div>{title}</div>
         <CancelButtonWrapper onClick={onCancelButtonClick}>
-          <ImageWrapper
-            src={process.env.PUBLIC_URL + '/images/cancel.png'}
-            alt='content-viewer-cancel'
+          <TypedIcon
+            icon="close_small"
+            style={{ width: '15px', height: '15px' }}
           />
         </CancelButtonWrapper>
       </TitleWrapper>
@@ -47,13 +49,10 @@ const TitleWrapper = styled.div`
 `
 
 const CancelButtonWrapper = styled.button`
+  display: flex;
+  align-items: center;
   border: none;
   background: inherit;
-`
-
-const ImageWrapper = styled.img`
-  width: 15px;
-  height: 15px;
 `
 
 const IframeSourceWrapper = styled.iframe`
