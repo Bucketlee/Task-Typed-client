@@ -15,7 +15,6 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     addToast: (state: IToastState, action: PayloadAction<IToast>) => {
-      console.log('what', action.payload);
       state.toasts.push(action.payload);
     },
     removeToast: (state: IToastState, action: PayloadAction<{ id: string }>) => {

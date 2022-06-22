@@ -1,30 +1,27 @@
 import React, { useState, useCallback } from 'react';
+
 import ResourceLabelView from './ResourceLabelView';
 
 interface ResourceLabelProps {
   title: string,
-  onEditButtonClick(newValue: string): void,
+  onEditButtonClick(newTitle: string): void,
   onDeleteButtonClick(): void,
 }
 
-function ResourceLabel({ title, onEditButtonClick, onDeleteButtonClick }: ResourceLabelProps) {
+function ResourceLabel({
+  title,
+  onEditButtonClick,
+  onDeleteButtonClick
+}: ResourceLabelProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [newValue, setNewValue] = useState(title);
+  const [newTitle, setNewTitle] = useState(title);
 
   const handleTitleEdit = useCallback(() => {
-    if (title !== newValue) {
-      onEditButtonClick(newValue);
+    if (title !== newTitle) {
+      onEditButtonClick(newTitle);
     }
     setIsEditing(!isEditing);
-  }, [title, newValue, onEditButtonClick, isEditing]);
-
-  const handleResourceLabelDelete = useCallback(() => {
-    onDeleteButtonClick();
-  }, [onDeleteButtonClick]);
-
-  const handleInputValueChange = useCallback((value: string) => {
-    setNewValue(value)
-  }, []);
+  }, [title, newTitle, onEditButtonClick, isEditing]);
 
   const handleInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -32,19 +29,19 @@ function ResourceLabel({ title, onEditButtonClick, onDeleteButtonClick }: Resour
     }
 
     if (e.key === 'Escape') {
-      setNewValue(title);
+      setNewTitle(title);
       setIsEditing(false);
     }
   }, [handleTitleEdit, title, setIsEditing]);
 
   return (
     <ResourceLabelView
-      value={newValue}
+      value={newTitle}
       isEditing={isEditing}
-      onInputValueChange={handleInputValueChange}
+      onInputValueChange={setNewTitle}
       onInputKeyDown={handleInputKeyDown}
       onEditButtonClick={handleTitleEdit}
-      onDeleteButtonClick={handleResourceLabelDelete}
+      onDeleteButtonClick={onDeleteButtonClick}
     />
   );
 }

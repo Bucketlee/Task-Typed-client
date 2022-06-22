@@ -14,7 +14,7 @@ function Menu() {
 
   const handleUrlInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const result = resourceService.addUrlResource('url', newUrl);
+      const result = resourceService.addUrlResource(newUrl);
       if (result) {
         toastService.addNewToast('리소스를 등록했습니다.', 3000);
       } else {
@@ -29,25 +29,6 @@ function Menu() {
     }
   }, [resourceService, toastService, newUrl]);
 
-  const handleChangeFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-
-    if (files) {
-      const len = files ? files.length : 0;
-      for (let i = 0; i < len; i += 1) {
-        setTimeout(() => {
-          const result = resourceService.addImageResource(files[i]);
-          if (result) {
-            toastService.addNewToast('리소스를 등록했습니다.', 3000);
-          } else {
-            toastService.addNewToast('리소스를 등록하지 못했습니다.', 3000);
-          }
-        }, (Math.random() * 7 + 3)*1000*i);
-      }
-    }
-
-  }, [resourceService, toastService]);
-
   const hiddenFileInput = useRef(null);
 
   const handleAddImageButtonClick = useCallback(() => {
@@ -56,6 +37,27 @@ function Menu() {
       target.click();
     }
   }, []);
+
+  const handleImageFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (!files) {
+      return;
+    }
+
+    const len = files ? files.length : 0;
+    for (let i = 0; i < len; i += 1) {
+      setTimeout(() => {
+        const result = resourceService.addImageResource(files[i]);
+
+        if (result) {
+          toastService.addNewToast('리소스를 등록했습니다.', 3000);
+        } else {
+          toastService.addNewToast('리소스를 등록하지 못했습니다.', 3000);
+        }
+      }, (Math.random() * 7 + 3)*1000*i);
+    }
+  }, [resourceService, toastService]);
 
   return (
     <MenuView
@@ -66,7 +68,7 @@ function Menu() {
       onUrlInputBlur={() => setIsUrlInputOpen(false)}
       onAddImageButtonClick={handleAddImageButtonClick}
       hiddenFileInput={hiddenFileInput}
-      onImageInputChange={handleChangeFile}
+      onImageInputChange={handleImageFileChange}
     />
   );
 }

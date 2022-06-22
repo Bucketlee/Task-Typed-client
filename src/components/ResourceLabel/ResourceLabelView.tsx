@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { TypedIcon } from 'typed-design-system';
+
 interface ResourceLabelViewProps {
   value: string;
   isEditing: boolean;
@@ -33,10 +35,16 @@ function ResourceLabelView({
       </div>
       <OptionWrapper>
         <OptionButtonWrapper onClick={() => onEditButtonClick()}>
-          <ImageWrapper src={process.env.PUBLIC_URL + '/images/edit.png'} alt='resource-label-edit' />
+          <TypedIcon
+            icon='edit_small'
+            style={{ width: '20px', height: '20px' }}
+          />
         </OptionButtonWrapper>
         <OptionButtonWrapper onClick={() => onDeleteButtonClick()}>
-          <ImageWrapper src={process.env.PUBLIC_URL + '/images/delete.png'} alt='resource-label-delete' />
+          <TypedIcon
+            icon='trash_small'
+            style={{ width: '15px', height: '15px' }}
+          />
         </OptionButtonWrapper>
       </OptionWrapper>
     </ResourceLabelViewWrapper>
@@ -61,6 +69,7 @@ const TitleWrapper = styled.div`
   overflow: hidden;
   word-break: break-all;
   text-overflow: ellipsis;
+  text-align: left;
 `
 const EditInputWrapper = styled.input`
   width: 100%;
@@ -73,13 +82,10 @@ const OptionWrapper = styled.div`
 `
 
 const OptionButtonWrapper = styled.button`
+  display: flex;
+  align-items: center;
   background: inherit;
   border: none;
-`
-
-const ImageWrapper = styled.img`
-  width: 20px;
-  height: 20px;
 `
 
 export default ResourceLabelView;
