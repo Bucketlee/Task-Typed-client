@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import Menu from '../Menu';
 import { IResource } from '../../models/resource';
+import Menu from '../Menu';
 import ResourceLabel from '../ResourceLabel';
 
 interface SidebarViewProps {
@@ -20,18 +20,20 @@ function SidebarView({
   return (
     <SidebarViewWrapper>
       <Menu />
-      <ResourcesWrapper>
+      <ResourcesUlWrapper>
         {resources.map((data, i) => (
-          <ResourceLabelWrapper onClick={() => onResourceClick(data)}>
+          <ResourceLabelLiWrapper
+            key={`resource-${i}-${data.id}`}
+            onClick={() => onResourceClick(data)}
+          >
             <ResourceLabel
-              key={`resource-${i}`}
               title={data.title}
               onEditButtonClick={(newValue) => onEditButtonClick(data, newValue)}
               onDeleteButtonClick={() => onDeleteButtonClick(data.id)}
             />
-          </ResourceLabelWrapper>
+          </ResourceLabelLiWrapper>
         ))}
-      </ResourcesWrapper>
+      </ResourcesUlWrapper>
     </SidebarViewWrapper>
   );
 }
@@ -43,13 +45,15 @@ const SidebarViewWrapper = styled.aside`
   background-color: #f7f7f7;
 `
 
-const ResourcesWrapper = styled.div`
+const ResourcesUlWrapper = styled.ul`
+  margin: 0;
   padding-top: 55px;
+  padding-left: 0;
   max-height: 100vh;
   overflow: auto;
 `
 
-const ResourceLabelWrapper = styled.button`
+const ResourceLabelLiWrapper = styled.li`
   margin: 10px;
   padding: 0;
   display: flex;

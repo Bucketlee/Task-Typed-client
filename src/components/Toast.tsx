@@ -7,7 +7,7 @@ function Toast() {
 
   return (
     <ToastWrapper>
-      {toasts.map(toast => <ToastMessageWrapper>{toast.content}</ToastMessageWrapper>)}
+      {toasts.map(toast => <ToastMessageWrapper key={`toast-${toast.id}`}>{toast.content}</ToastMessageWrapper>)}
     </ToastWrapper>
   );
 }
