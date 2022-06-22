@@ -28,6 +28,13 @@ You will also see any lint errors in the console.
 - resource 수정 및 삭제
 - 선택한 resource view
 
+## Stack
+
+- typescript
+- React
+- Redux
+- styled-components
+
 ## Contact
 - github, git issue
 - chanyoung.cedu@gmail.com
