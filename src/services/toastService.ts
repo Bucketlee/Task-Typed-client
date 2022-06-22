@@ -1,6 +1,6 @@
 import { Store } from "@reduxjs/toolkit";
 
-import Toast, { IToast } from '../models/toast';
+import Toast from '../models/toast';
 import { addToast, removeToast } from "../app/toastSlice";
 
 export interface IToastService {
@@ -18,8 +18,7 @@ class ToastService implements IToastService {
       duration,
     );
     this.store.dispatch(addToast(newToast));
-    console.log("!?", newToast);
-    setTimeout(() => this.store.dispatch(removeToast(newToast)), 600 + duration);
+    setTimeout(() => this.store.dispatch(removeToast(newToast)), duration ? duration : 1000);
   }
 }
 
