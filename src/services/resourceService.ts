@@ -1,11 +1,11 @@
 import { Store } from "@reduxjs/toolkit";
 
-import Resource, { IResource, ResourceType } from '../models/resource';
+import Resource, { IResource } from '../models/resource';
 import { addResource, updateResource, deleteResource } from "../app/resourceSlice";
 import { changeYoutubeEmbedUrl, checkValidUrl } from "../utils/resource";
 
 export interface IResourceService {
-  addUrlResource(type: ResourceType, title: string, source: string): boolean;
+  addUrlResource(source: string): boolean;
   addImageResource(file: File): boolean;
   updateResourceTitle(resource: IResource, newTitle: string): void;
   deleteResource(id: string): void;
@@ -15,21 +15,18 @@ class ResourceService implements IResourceService {
   constructor(private readonly store: Store) {
   }
 
-  addUrlResource(type: ResourceType, title: string, source?: string): boolean {
-    if (!source) {
-      source = title;
-    }
-
+  addUrlResource(source: string): boolean {
     if (!checkValidUrl(source)) {
       return false;
     }
 
-    if (source.includes('youtube.com/watch?v=')) {
+    if (source.includes('youtube.com')) {
       source = changeYoutubeEmbedUrl(source);
-      title = source;
     }
 
-    const newResource = Resource.fromTitle(type, title, source);
+    const now = Date.now();
+
+    const newResource = new Resource(`url-${now}`, 'url', source, source);
     this.store.dispatch(addResource(newResource));
     return true;
   }
@@ -39,14 +36,16 @@ class ResourceService implements IResourceService {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       const base64 = reader.result;
-      if (base64) {
-      const base64Sub = base64.toString();
 
-      const newResource = Resource.fromTitle('image', file.name, base64Sub);
-      this.store.dispatch(addResource(newResource));
-      } else {
+      if (!base64) {
         return false;
       }
+
+      const base64Sub = base64.toString();
+      const now = Date.now();
+
+      const newResource = new Resource(`url-${now}`, 'image', file.name, base64Sub);
+      this.store.dispatch(addResource(newResource));
     }
     return true;
   }

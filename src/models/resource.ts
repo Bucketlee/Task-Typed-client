@@ -24,14 +24,4 @@ export default class Resource implements IResource {
       options?.source ?? this.source,
     );
   }
-
-  static fromTitle(type: ResourceType, title: string, source?: string): IResource {
-    const now = Date.now();
-    return new Resource(
-      `${type}-${now}`,
-      type,
-      title,
-      source ? source : title,
-    );
-  }
 }

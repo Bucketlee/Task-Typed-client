@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+
 import { resourceSlice } from './resourceSlice';
 import { toastSlice } from './toastSlice';
 

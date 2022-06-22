@@ -14,7 +14,7 @@ function Menu() {
 
   const handleUrlInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const result = resourceService.addUrlResource('url', newUrl);
+      const result = resourceService.addUrlResource(newUrl);
       if (result) {
         toastService.addNewToast('리소스를 등록했습니다.', 3000);
       } else {
