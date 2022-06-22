@@ -33,10 +33,16 @@ function ResourceLabelView({
       </div>
       <OptionWrapper>
         <OptionButtonWrapper onClick={() => onEditButtonClick()}>
-          <ImageWrapper src={process.env.PUBLIC_URL + '/images/edit.png'} alt='resource-label-edit' />
+          <ImageWrapper
+            src={process.env.PUBLIC_URL + '/images/edit.png'}
+            alt='resource-label-edit'
+          />
         </OptionButtonWrapper>
         <OptionButtonWrapper onClick={() => onDeleteButtonClick()}>
-          <ImageWrapper src={process.env.PUBLIC_URL + '/images/delete.png'} alt='resource-label-delete' />
+          <ImageWrapper
+            src={process.env.PUBLIC_URL + '/images/delete.png'}
+            alt='resource-label-delete'
+          />
         </OptionButtonWrapper>
       </OptionWrapper>
     </ResourceLabelViewWrapper>
@@ -61,6 +67,7 @@ const TitleWrapper = styled.div`
   overflow: hidden;
   word-break: break-all;
   text-overflow: ellipsis;
+  text-align: left;
 `
 const EditInputWrapper = styled.input`
   width: 100%;

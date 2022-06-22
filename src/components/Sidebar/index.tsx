@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react';
 
 import { store } from '../../app/store';
-import useResourceObserver from '../../useResourceObserver';
 import { IResource } from '../../models/resource';
+import useResourceObserver from '../../useResourceObserver';
 import ResourceService from '../../services/resourceService';
 import SidebarView from './SidebarView';
 
@@ -14,8 +14,8 @@ function Sidebar({ onResourceClick }: SidebarProps) {
   const resources = useResourceObserver();
   const resourceService = useMemo(() => new ResourceService(store), []);
 
-  const handleResourceDelete = useCallback((resource: IResource) => {
-    resourceService.deleteResource(resource.id);
+  const handleResourceDelete = useCallback((resourceId: string) => {
+    resourceService.deleteResource(resourceId);
   }, [resourceService]);
 
   const handleTitleEdit = useCallback((resource: IResource, newTitle: string) => {

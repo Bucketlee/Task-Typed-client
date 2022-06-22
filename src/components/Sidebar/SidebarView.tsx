@@ -7,7 +7,7 @@ import ResourceLabel from '../ResourceLabel';
 interface SidebarViewProps {
   resources: IResource[];
   onEditButtonClick(resource: IResource, newTitle: string): void;
-  onDeleteButtonClick(resource: IResource): void;
+  onDeleteButtonClick(resourceId: string): void;
   onResourceClick(resource: IResource): void;
 }
 
@@ -27,7 +27,7 @@ function SidebarView({
               key={`resource-${i}`}
               title={data.title}
               onEditButtonClick={(newValue) => onEditButtonClick(data, newValue)}
-              onDeleteButtonClick={() => onDeleteButtonClick(data)}
+              onDeleteButtonClick={() => onDeleteButtonClick(data.id)}
             />
           </ResourceLabelWrapper>
         ))}

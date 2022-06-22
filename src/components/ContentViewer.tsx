@@ -6,17 +6,27 @@ interface ContentViewerProps {
   onCancelButtonClick(): void;
 }
 
-function ContentViewer({ title, iframeSource, onCancelButtonClick }: ContentViewerProps) {
+function ContentViewer({
+  title,
+  iframeSource,
+  onCancelButtonClick
+}: ContentViewerProps) {
   return (
     <ContentViewerWrapper>
       <TitleWrapper>
         <div>{title}</div>
         <CancelButtonWrapper onClick={onCancelButtonClick}>
-          <ImageWrapper src={process.env.PUBLIC_URL + '/images/cancel.png'} alt='content-viewer-cancel' />
+          <ImageWrapper
+            src={process.env.PUBLIC_URL + '/images/cancel.png'}
+            alt='content-viewer-cancel'
+          />
         </CancelButtonWrapper>
       </TitleWrapper>
       <div>
-        <IframeSourceWrapper src={iframeSource} title={`resource-viewer-${title}`} />
+        <IframeSourceWrapper
+          src={iframeSource}
+          title={`resource-viewer-${title}`}
+        />
       </div>
     </ContentViewerWrapper>
   );
